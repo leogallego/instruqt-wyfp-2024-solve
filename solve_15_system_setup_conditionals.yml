@@ -3,7 +3,7 @@
   hosts: all
   become: true
   vars:
-    user_name: 'newstudent'
+    user_name: 'padawan'
     package_name: httpd
   tasks:
     - name: Update all security-related packages
