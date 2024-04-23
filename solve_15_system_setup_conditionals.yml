@@ -1,0 +1,27 @@
+---
+- name: Basic System Setup
+  hosts: all
+  become: true
+  vars:
+    user_name: 'newstudent'
+    package_name: httpd
+  tasks:
+    - name: Update all security-related packages
+      ansible.builtin.dnf:
+        name: '*'
+        state: latest
+        security: true
+        update_only: true
+      when: inventory_hostname in groups['web']
+
+    - name: Create a new user
+      ansible.builtin.user:
+        name: "{{ user_name }}"
+        state: present
+        create_home: true
+
+    - name: Install Apache on web servers
+      ansible.builtin.dnf:
+        name: "{{ package_name }}"
+        state: present
+      when: inventory_hostname in groups['web']

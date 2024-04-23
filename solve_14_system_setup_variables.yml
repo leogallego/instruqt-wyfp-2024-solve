@@ -1,0 +1,18 @@
+---
+- name: Basic System Setup
+  hosts: node1
+  become: true
+  vars:
+    user_name: 'padawan'
+  tasks:
+    - name: Update all security-related packages
+      ansible.builtin.dnf:
+        name: '*'
+        state: latest
+        security: true
+
+    - name: Create a new user
+      ansible.builtin.user:
+        name: "{{ user_name }}"
+        state: present
+        create_home: true
