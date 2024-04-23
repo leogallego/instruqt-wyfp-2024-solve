@@ -1,0 +1,73 @@
+---
+- name: Basic System Setup
+  hosts: all
+  become: true
+  vars:
+    user_name: 'padawan'
+    package_name: httpd
+  tasks:
+    - name: Update all security-related packages
+      ansible.builtin.dnf:
+        name: '*'
+        state: latest
+        security: true
+        update_only: true
+      when: inventory_hostname in groups['web']
+      tags:
+        - solve11
+        - solve13
+        - solve14
+
+    - name: Create a new user
+      ansible.builtin.user:
+        name: "{{ user_name }}"
+        state: present
+        create_home: true
+      tags:
+        - solve11
+        - solve13
+        - solve14
+
+    - name: Install Apache on web servers
+      ansible.builtin.dnf:
+        name: "{{ package_name }}"
+        state: present
+      when: inventory_hostname in groups['web']
+
+    - name: Install firewalld
+      ansible.builtin.dnf:
+        name: firewalld
+        state: present
+      when: inventory_hostname in groups['web']
+
+    - name: Ensure firewalld is running
+      ansible.builtin.service:
+        name: firewalld
+        state: started
+        enabled: true
+      when: inventory_hostname in groups['web']
+
+    - name: Allow HTTPS traffic on web servers
+      ansible.posix.firewalld:
+        service: https
+        permanent: true
+        state: enabled
+      when: inventory_hostname in groups['web']
+      notify: Reload Firewall
+
+    - name: Ensure three users are present
+      ansible.builtin.user:
+        name: "{{ item }}"
+        state: present
+      loop:
+         - dev_user
+         - qa_user
+         - prod_user
+
+  handlers:
+    - name: Reload Firewall
+      ansible.builtin.service:
+        name: firewalld
+        state: reloaded
+
+    
