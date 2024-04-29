@@ -5,6 +5,7 @@
   vars:
     user_name: 'padawan'
     package_name: httpd
+    apache_service_name: httpd
   tasks:
     - name: Update all security-related packages
       ansible.builtin.dnf:
