@@ -1,0 +1,33 @@
+---
+- name: Cleanup Environment
+  hosts: all
+  become: true
+  vars:
+    package_name: httpd
+  tasks:
+    - name: Remove Apache from web servers
+      ansible.builtin.dnf:
+        name: "{{ package_name }}"
+        state: absent
+      when: inventory_hostname in groups['web']
+
+    - name: Remove firewalld
+      ansible.builtin.dnf:
+        name: firewalld
+        state: absent
+
+    - name: Delete created users
+      ansible.builtin.user:
+        name: "{{ item }}"
+        state: absent
+        remove: true  # Use 'remove: true’ to delete home directories
+      loop:
+        - alice
+        - bob
+        - carol
+        - Roger
+
+    - name: Reset MOTD to an empty message
+      ansible.builtin.copy:
+        dest: /etc/motd
+        content: ''

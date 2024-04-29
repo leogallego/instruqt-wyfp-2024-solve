@@ -26,6 +26,13 @@
         state: present
       when: inventory_hostname in groups['web']
 
+    - name: Ensure Apache is running and enabled
+      ansible.builtin.service:
+        name: "{{ apache_service_name }}"
+        state: started
+        enabled: true
+      when: inventory_hostname in groups['web']
+
     - name: Install firewalld
       ansible.builtin.dnf:
         name: firewalld
