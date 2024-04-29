@@ -47,9 +47,9 @@
         enabled: true
       when: inventory_hostname in groups['web']
 
-    - name: Allow HTTPS traffic on web servers
+    - name: Allow HTTP traffic on web servers
       ansible.posix.firewalld:
-        service: https
+        service: http
         permanent: true
         state: enabled
       when: inventory_hostname in groups['web']
