@@ -3,7 +3,7 @@
   hosts: web
   become: true
   tasks:
-    - name: Update all security-related packages
+    - name: Install security updates for the kernel
       ansible.builtin.dnf:
         name: 'kernel'
         state: latest
