@@ -63,7 +63,7 @@ In that directory, right click and create the file `system_setup.yml`.
 ☑️ Task 2 - Defining the  system_setup.yml playbook
 ===
 
-Open the file `system_setup.yml` you just created and input the following content:
+The following content is how a playbook starts:
 
 ```
 ---
@@ -94,7 +94,7 @@ What are the above lines doing?
 ☑️ Task 3 - Adding tasks to the system_setup.yml playbook
 ===
 
-With the play defined, let's add a couple of tasks to update all installed packages on our `node1` host and to create a user. We will take advantage of the `ansible.builtin.dnf` module to apply all security-related updates to installed packages.
+Now that we know how a playbook file starts, let's look at the plays. Let's add a couple of tasks to update all installed packages on our `node1` host and to create a user. We will take advantage of the `ansible.builtin.dnf` module to apply all security-related updates to installed packages.
 
 Modify the `system_setup.yml` file to add the 2 tasks, as shown below:
 

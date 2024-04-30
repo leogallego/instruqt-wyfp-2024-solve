@@ -22,6 +22,11 @@ tabs:
 - title: control
   type: terminal
   hostname: control
+- title: Node1 Web
+  type: service
+  hostname: node1
+  path: /
+  port: 80
 difficulty: ""
 timelimit: 1
 ---
@@ -154,17 +159,17 @@ Nothing was changed, thus the playbook ran and you will notice the PLAY RECAP do
 ===
 
 > [!NOTE]
-> In the **Control** tab
+> Check the new **Node1 Web** tab at the top, next to the **Control** one.
 
-Run the following `curl` command
+You should see the following webpage:
+
+**INSERT WEBPAGE IMAGE**
+
+> [!NOTE]
+> Alternatively, check in the CLI
 
 ```
 curl http://node1
-```
-```
-<body>
-<h1>This is a production webserver, take care!</h1>
-</body>
 ```
 
 Now let's try with `node3`, the server in the `[database]` group:
