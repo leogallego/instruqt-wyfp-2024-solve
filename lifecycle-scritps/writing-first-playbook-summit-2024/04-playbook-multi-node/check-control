@@ -7,6 +7,7 @@ USER=rhel
 target_directory="/home/rhel/ansible-files"
 target_file="${target_directory}/system_setup.yml"
 solve_file="/tmp/first-101/solve_13_system_setup_webhosts.yml"
+check_file="/tmp/system_setup_check_web.yml"
 
 # Make sure solvers exist
 /usr/bin/git clone https://github.com/leogallego/instruqt-wyfp-2024-solve.git /tmp/first-101
@@ -28,6 +29,36 @@ if [ -f "$target_file" ]; then
     fi
 else
     fail-message "Challenge 1.3 - The 'system_setup.yml' file does not exist in the specified directory."
+fi
+
+
+su - $USER -c 'cat >/tmp/system_setup_check_web.yml <<EOL
+---
+- name: System Configuration Checks
+  hosts: web
+  become: true
+  tasks:
+    - name: Check user existence
+      ansible.builtin.command:
+        cmd: id myuser
+      register: user_check
+ 
+    - name: Report user status
+      ansible.builtin.debug:
+        msg: "User 'myuser' exists."
+      when: user_check.rc == 0
+
+EOL
+cat /tmp/system_setup_check_web.yml'
+
+# Check if the new user exists on the remote host
+cd $target_directory
+CMD='ansible-navigator run /tmp/system_setup_check_web.yml -m stdout'
+
+# Check user exists.
+if ! $CMD -vv; then
+ echo "Challenge 1.2 - FAIL: myuser does not exist. Something is wrong."
+ exit 1
 fi
 
 # Run solve playbook

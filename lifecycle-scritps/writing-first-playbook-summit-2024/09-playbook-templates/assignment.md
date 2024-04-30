@@ -78,17 +78,19 @@ The template file contains the basic text that will later be copied over to the 
 Open the `system_setup.yml` playbook and modify it to include the following task right before the `handlers` section:
 
 > [!WARNING]
-> We are only showing the task to add. Pay atention to the indentation!
+> We are only showing the task to add. Pay atention to the indentation and maintain the same format as the other tasks, leave a blank line above and a blank line below the task!
 
 ```
+
     - name: Update MOTD from Jinja2 Template
       ansible.builtin.template:
         src: templates/motd.j2
         dest: /etc/motd
+
 ```
 
 > [!IMPORTANT]
-> If you run into issues, you will find the full `system_setup.yml` playbook at the end. Look for the **💡 Solution playbook** section in the right sidebar.
+> If you run into issues adding the task, you will find the full `system_setup.yml` playbook at the end of this sidebar. Look for the **💡 Solution playbook** section.
 
 
 ☑️ Task 4 - Run the playbook
@@ -115,21 +117,20 @@ Login to `node1` via SSH and check the message of the day content.
 ssh node1
 ```
 
-If you see the message below, success!
-
+You should see a message similar to the one below (RHEL version might vary!)
 
 ```
 Welcome to node1.
-OS: RedHat 8.7
+OS: RedHat 9.2
 Architecture: x86_64
 Register this system with Red Hat Insights: insights-client --register
 Create an account or view all your systems at https://red.ht/insights-dashboard
-Last login: Mon Jan 29 16:30:31 2024 from 10.5.1.29
 ```
+
 You can now exit node1:
 
 ```
-$ exit
+exit
 ```
 💡 Solution playbook
 ===
@@ -144,9 +145,9 @@ $ exit
     package_name: httpd
     apache_service_name: httpd
   tasks:
-    - name: Update all security-related packages
+    - name: Install security updates for the kernel
       ansible.builtin.dnf:
-        name: '*'
+        name: 'kernel'
         state: latest
         security: true
         update_only: true

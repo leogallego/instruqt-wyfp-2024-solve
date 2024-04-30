@@ -107,9 +107,9 @@ Modify the `system_setup.yml` file to add the 2 tasks, as shown below:
   hosts: node1
   become: true
   tasks:
-    - name: Update all security-related packages
+    - name: Install security updates for the kernel
       ansible.builtin.dnf:
-        name: '*'
+        name: 'kernel'
         state: latest
         security: true
 

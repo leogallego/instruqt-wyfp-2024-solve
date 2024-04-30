@@ -63,7 +63,6 @@ This is a special variable named `{{ item }}`. This variable `item` gets replace
          - alice
          - bob
          - carol
-
 ```
 
 What changed from our original task creating a single user?

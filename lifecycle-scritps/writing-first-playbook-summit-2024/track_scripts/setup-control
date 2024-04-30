@@ -114,7 +114,7 @@ cat /etc/environment
 #sudo dnf config-manager --set-disabled rhui-rhel-9-for-x86_64-appstream-rhui-rpms
 #sudo subscription-manager repos --list
 sudo dnf config-manager --enable ansible-automation-platform
-
+sudo dnf config-manager --disable google*
 
 sudo dnf clean all
 sudo dnf install -y ansible-navigator ansible-lint nc

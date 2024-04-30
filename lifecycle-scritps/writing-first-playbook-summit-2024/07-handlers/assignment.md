@@ -55,9 +55,9 @@ Open the *Editor* tab, and edit the `system_setup.yml` playbook. Make sure you a
     package_name: httpd
     apache_service_name: httpd
   tasks:
-    - name: Update all security-related packages
+    - name: Install security updates for the kernel
       ansible.builtin.dnf:
-        name: '*'
+        name: 'kernel'
         state: latest
         security: true
         update_only: true
@@ -166,10 +166,10 @@ You should see the following webpage:
 **INSERT WEBPAGE IMAGE**
 
 > [!NOTE]
-> Alternatively, check in the CLI
+> Alternatively, check in the CLI. The output would be too long so we are greping:
 
 ```
-curl http://node1
+curl http://node1 | grep "HTTP Server"
 ```
 
 Now let's try with `node3`, the server in the `[database]` group:

@@ -63,9 +63,9 @@ Update your `system_setup.yml` playbook with the changes below, pay atention to 
     user_name: 'padawan'
     package_name: httpd
   tasks:
-    - name: Update all security-related packages
+    - name: Install security updates for the kernel
       ansible.builtin.dnf:
-        name: '*'
+        name: 'kernel'
         state: latest
         security: true
         update_only: true

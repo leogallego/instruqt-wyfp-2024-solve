@@ -16,5 +16,5 @@ chown $USER:$USER -R $target_directory
 
 # Run solve playbook
 #su - $USER -c 'ansible-navigator run /tmp/first-101/solve_11_system_setup.yml -m stdout'
-cd $target_directory
-ansible-navigator run $target_file -m stdout
+#cd $target_directory
+#ansible-navigator run $target_file -m stdout

@@ -50,11 +50,7 @@ ansible-navigator run system_setup.yml
 > [!NOTE]
 > `-i hosts` option is not required as the inventory was configured in the `ansible-navigator.yml` settings file.
 
-The output should not report any errors but provide an overview of the tasks executed and a play recap summarizing what has been done.
-
-```
-ansible-navigator run system_setup.yml
-```
+The output should not report any errors but provide an overview of the tasks executed and a "PLAY RECAP" summarizing what has been done.
 
 ![image.png](../assets/image.png)
 
@@ -79,9 +75,10 @@ Run the Ansible Playbook a second time and compare the output to the original.
 ```
 ansible-navigator run system_setup.yml
 ```
+
 You will notice the tasks change from `changed` to `ok` including the colors changing from `yellow` to `green`.
 
-Additionally, the *PLAY RECAP* summary makes it easy to spot the changes made by Ansible.
+Additionally, the *"PLAY RECAP"* summary at the end makes it easy to spot the changes made by Ansible.
 
 You should see something like this:
 ![image.png](../assets/image.png)

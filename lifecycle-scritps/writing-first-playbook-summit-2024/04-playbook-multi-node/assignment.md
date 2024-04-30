@@ -43,8 +43,6 @@ Open your `system_setup.yml` playbook and modify the `hosts:` line value from th
 - name: Basic System Setup
   hosts: web
   become: true
-  tasks:
-....
 ```
 
 ☑️ Task 2 - Run the system_setup.yml  playbook again

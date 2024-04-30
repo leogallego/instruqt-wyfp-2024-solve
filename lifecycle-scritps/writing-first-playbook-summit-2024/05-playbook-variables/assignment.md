@@ -64,9 +64,9 @@ Look for the changes in the playbook below:
   vars:
     user_name: 'padawan'
   tasks:
-    - name: Update all security-related packages
+    - name: Install security updates for the kernel
       ansible.builtin.dnf:
-        name: '*'
+        name: 'kernel'
         state: latest
         security: true
 

@@ -40,6 +40,7 @@ chown -R rhel:rhel /home/rhel/.ssh
 ## END COMMENT CENTOS
 
 ## clean repo metadata and refresh
+dnf config-manager --disable google*
 dnf clean all
 # dnf config-manager --enable rhui-rhel-8-for-x86_64-baseos-rhui-rpms
 # dnf config-manager --enable rhui-rhel-8-for-x86_64-appstream-rhui-rpms
