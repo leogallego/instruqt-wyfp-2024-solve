@@ -7,7 +7,7 @@
   tasks:
     - name: Update all security-related packages
       ansible.builtin.dnf:
-        name: '*'
+        name: 'kernel'
         state: latest
         security: true
 
