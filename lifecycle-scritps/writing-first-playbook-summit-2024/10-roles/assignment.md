@@ -198,6 +198,9 @@ Edit `ansible-files/roles/apache/templates/index.html.j2`:
 
 In the `ansible-files/roles/apache/tasks/main.yml` file, add the following task at the end:
 
+> [!IMPORTANT]
+> Pay atention to indentation. When pressing enter in VSCode some extra spaces might be added!
+
 ```
 - name: Deploy custom index.html
   ansible.builtin.template:
@@ -231,7 +234,7 @@ Create the `deploy_apache.yml` playbook in the `ansible-files` directory with th
 > In the **Control** tab
 
 ```
-ansible-navigator run test_apache_role.yml
+ansible-navigator run deploy_apache.yml
 ```
 
 ☑️ Task 10 - Verify the results

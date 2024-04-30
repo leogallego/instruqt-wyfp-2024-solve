@@ -12,7 +12,7 @@ solve_file="/tmp/first-101/solve_13_system_setup_webhosts.yml"
 
 # Copy solved playbook
 cp $solve_file $target_file
-chown $USER:$USER $target_file 
+chown -R $USER:$USER $target_directory
 
 # Run solve playbook
 #su - $USER -c 'ansible-navigator run system_setup.yml -m stdout'

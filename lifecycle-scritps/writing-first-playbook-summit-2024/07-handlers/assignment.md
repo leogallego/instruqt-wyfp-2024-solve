@@ -150,7 +150,7 @@ Nothing was changed, thus the playbook ran and you will notice the PLAY RECAP do
 
 
 
-☑️ Task 6 - Verify Apache listening on port 443
+☑️ Task 6 - Verify Apache listening on port 80
 ===
 
 > [!NOTE]

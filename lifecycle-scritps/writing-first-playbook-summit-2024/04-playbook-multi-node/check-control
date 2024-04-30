@@ -24,10 +24,10 @@ if [ -f "$target_file" ]; then
 
     # Compare the content of the target_file file with the expected content
     if [ "$file_content" != "$solve_content" ]; then
-        fail-message "The 'system_setup.yml' file does not have the proper content. Please check the file and try again."
+        fail-message "Challenge 1.3 - The 'system_setup.yml' file does not have the proper content. Please check the file and try again."
     fi
 else
-    fail-message "The 'system_setup.yml' file does not exist in the specified directory."
+    fail-message "Challenge 1.3 - The 'system_setup.yml' file does not exist in the specified directory."
 fi
 
 # Run solve playbook

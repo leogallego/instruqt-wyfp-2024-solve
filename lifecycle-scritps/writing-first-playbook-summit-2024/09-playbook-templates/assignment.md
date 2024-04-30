@@ -48,14 +48,17 @@ In the following example, let's create a template for the Message of the Day (MO
 > [!NOTE]
 > In the *VSCode Editor* tab
 
-Inside the `~/ansible-files` directory, create the  `templates` subdirectory (right click and select 'New Folder' in VSCode) to store our template files.
+In the `ansible-files` directory, create the  `templates` subdirectory (right click and select 'New Folder' in VSCode) to store our new template files.
 
-☑️ Task 2 - Create the motd-facts.j2 jinja file
+☑️ Task 2 - Create the motd.j2 jinja file
 ===
 
-Templates end with a `.j2` file extension and mix static content with dynamic placeholders enclosed in curly braces `{{ }}`.
+Template files end with a `.j2` file extension and mix static content with dynamic placeholders enclosed in curly braces `{{ }}`.
 
-Within the `ansible-files/templates` directory, create the file `motd-facts.j2` with the following content:
+Within the `ansible-files/templates` directory, create the file `motd.j2` with the following content:
+
+> [!NOTE]
+> You can right-click over the `templates`  directory in VSCode and use "New File".
 
 ```
 Welcome to {{ ansible_hostname }}.
@@ -71,25 +74,22 @@ The template file contains the basic text that will later be copied over to the 
 > [!NOTE]
 > In the **VSCode Editor** tab
 
-> [!WARNING]
-> Pay atention to the indentation, we are only showing the task to add!
 
 Open the `system_setup.yml` playbook and modify it to include the following task right before the `handlers` section:
 
-```
-[...]
+> [!WARNING]
+> We are only showing the task to add. Pay atention to the indentation!
 
+```
     - name: Update MOTD from Jinja2 Template
       ansible.builtin.template:
         src: templates/motd.j2
         dest: /etc/motd
-
-  handlers:
-    - name: Reload Firewall
-      ansible.builtin.service:
-        name: firewalld
-        state: reloaded
 ```
+
+> [!IMPORTANT]
+> If you run into issues, you will find the full `system_setup.yml` playbook at the end. Look for the **💡 Solution playbook** section in the right sidebar.
+
 
 ☑️ Task 4 - Run the playbook
 ===
@@ -112,7 +112,7 @@ ansible-navigator run system_setup.yml
 Login to `node1` via SSH and check the message of the day content.
 
 ```
-$ ssh node1
+ssh node1
 ```
 
 If you see the message below, success!
@@ -131,7 +131,78 @@ You can now exit node1:
 ```
 $ exit
 ```
+💡 Solution playbook
+===
 
+```
+---
+- name: Basic System Setup
+  hosts: all
+  become: true
+  vars:
+    user_name: 'padawan'
+    package_name: httpd
+    apache_service_name: httpd
+  tasks:
+    - name: Update all security-related packages
+      ansible.builtin.dnf:
+        name: '*'
+        state: latest
+        security: true
+        update_only: true
+      when: inventory_hostname in groups['web']
+
+    - name: Create a new user
+      ansible.builtin.user:
+        name: "{{ user_name }}"
+        state: present
+        create_home: true
+
+    - name: Install Apache on web servers
+      ansible.builtin.dnf:
+        name: "{{ package_name }}"
+        state: present
+      when: inventory_hostname in groups['web']
+
+    - name: Ensure Apache is running and enabled
+      ansible.builtin.service:
+        name: "{{ apache_service_name }}"
+        state: started
+        enabled: true
+      when: inventory_hostname in groups['web']
+
+    - name: Install firewalld
+      ansible.builtin.dnf:
+        name: firewalld
+        state: present
+      when: inventory_hostname in groups['web']
+
+    - name: Ensure firewalld is running
+      ansible.builtin.service:
+        name: firewalld
+        state: started
+        enabled: true
+      when: inventory_hostname in groups['web']
+
+    - name: Allow HTTP traffic on web servers
+      ansible.posix.firewalld:
+        service: http
+        permanent: true
+        state: enabled
+      when: inventory_hostname in groups['web']
+      notify: Reload Firewall
+
+    - name: Update MOTD from Jinja2 Template
+      ansible.builtin.template:
+        src: templates/motd.j2
+        dest: /etc/motd
+
+  handlers:
+    - name: Reload Firewall
+      ansible.builtin.service:
+        name: firewalld
+        state: reloaded
+```
 
 ✅ Next Challenge
 ===

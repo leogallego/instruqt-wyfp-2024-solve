@@ -32,6 +32,6 @@ CMD='ansible-navigator run /tmp/system_setup_check.yml -m stdout'
 
 # Check user exists.
 if ! $CMD -vv; then
- echo "FAIL: myuser does not exist. Something is wrong."
+ echo "Challenge 1.2 - FAIL: myuser does not exist. Something is wrong."
  exit 1
 fi

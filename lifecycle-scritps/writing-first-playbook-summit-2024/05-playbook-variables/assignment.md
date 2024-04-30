@@ -87,6 +87,8 @@ In the playbook above you can notice we have defined a variable (`user_name`) an
 
 ```
 cd ansible-files
+```
+```
 ansible-navigator run system_setup.yml
 ```
 
@@ -97,16 +99,12 @@ Once the Ansible Playbook successfully completes, run the following steps to che
 
 For node1:
 ```
-]$  ssh node1
-]$  id padawan
-]$ exit
+ssh node1  id padawan
 ```
 
 For node2:
 ```
-]$  ssh node2
-]$  id padawan
-]$ exit
+ssh node2  id padawan
 ```
 
 
