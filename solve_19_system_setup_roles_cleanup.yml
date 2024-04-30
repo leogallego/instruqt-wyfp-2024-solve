@@ -26,6 +26,8 @@
         - bob
         - carol
         - Roger
+        - myuser
+        - padawan
 
     - name: Reset MOTD to an empty message
       ansible.builtin.copy:
