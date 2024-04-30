@@ -1,0 +1,33 @@
+#!/bin/bash
+
+USER=rhel
+
+# Set the target directory and file
+target_directory="/home/rhel/ansible-files"
+target_file="${target_directory}/inventory"
+solve_file="/tmp/first-101/solve_11_system_setup.yml"
+
+
+
+cat >/tmp/hosts.solve <<EOL
+[web]
+node1
+node2
+
+EOL
+
+# Define the hosts file content
+expected_content=$(cat /tmp/hosts.solve)
+
+# Check if the 'hosts' file exists
+if [ -f $target_file ]; then
+    # Read the content of the 'hosts' file
+    file_content=$(cat $target_file)
+
+    # Compare the content of the 'hosts' file with the expected content
+    if [ "$file_content" != "$expected_content" ]; then
+        fail-message "The 'inventory' file does not have the proper content. Please try again."
+    fi
+else
+    fail-message "The 'inventory' file does not exist."
+fi
