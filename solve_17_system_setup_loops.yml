@@ -10,6 +10,6 @@
         state: present
         create_home: true
       loop:
-         - alice
-         - bob
-         - carol
+        - alice
+        - bob
+        - carol
